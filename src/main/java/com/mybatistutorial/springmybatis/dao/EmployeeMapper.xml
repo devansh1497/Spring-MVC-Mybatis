@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mybatistutorial.springmybatis.dao.EmployeeMapper">
+  
+  
+  <resultMap type="employee" id="result">
+  	<id property="id" column="id"/>
+  	<result property="fullName" column="fullname"/>
+  	<result property="email" column="email"/>
+  	<result property="gender" column="gender"/>
+  	<result property="hobbies" column="hobbies"/>
+  	<result property="country" column="country"/>
+  	<result property="address" column="address"/>  	
+  	
+  </resultMap>
+  
+  <!-- We are using the alias name for resultType below that we had specified in the mybatis-config.xml file -->
+  	<select id="getAllEmployees" resultType="employee"  resultMap="result">
+  		select * from employee
+  	</select>
+  	
+  	<insert id="insertEmployee" parameterType="employee" keyProperty="id" useGeneratedKeys="true">
+  		insert into employee(fullname, email,gender,hobbies,country,address)
+  		values (#{fullName}, #{email}, #{gender}, #{hobbies}, #{country}, #{address})
+  	</insert>
+  
+  	<delete id="deleteEmployee" parameterType="Integer">
+  		delete from employee
+  		where id = #{employeeId}
+  	</delete>
+  	
+  	<select id="findById" parameterType="Integer" resultType="employee" resultMap="result">
+  		select * from employee where id = #{employeeId}
+  	</select>
+  
+  	<update id="updateEmployee" parameterType="employee">
+  		update employee set fullname= #{fullName}, email=#{email}, gender=#{gender}, hobbies=#{hobbies}, country=#{country}, address=#{address}
+  		where id=#{id}
+  	</update>
+  
+  </mapper>
+  
